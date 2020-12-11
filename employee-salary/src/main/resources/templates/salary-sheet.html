@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}">
+	
+<head>
+    <title>Salary Sheet</title>
+    
+    <!-- jQuery -->
+<script src="/webjars/jquery/jquery.min.js"></script>
+
+    
+	
+	<script>
+       
+	 $(document).ready(function () {
+		 
+		 $(function(){
+			 employeeList();	
+		  });
+		 		
+		 
+		 employeeList=function(){
+		
+			 var table=$('#tbl'), option="";
+	    	   table.empty();
+	    	  
+	    	   $.ajax({
+	    		   
+	    		   type : "GET",
+				   url  : "/employee/list", 
+				   success : function(response){
+					   var userdatas=response.item;
+					   option = option + "<thead><tr><th>Employee ID</th><th>Name</th><th>Rank/Grade</th><th>Basic</th><th>House Rent</th><th>Medical</th><th>Gross</th></thead>";
+					   option = option+"<tbody>";	
+					   for(var i=0; i<userdatas.length; i++){
+						   option = option + "<tr>";
+						   option = option + "<td>"+userdatas[i].employeeCustomId+"</td>";
+						   option = option + "<td>"+userdatas[i].employeeName+"</td>";
+						   option = option + "<td>"+userdatas[i].gradeName+"</td>";
+						   option = option + "<td>"+userdatas[i].basic+"</td>";
+						   option = option + "<td>"+userdatas[i].houseRent+"</td>";
+						   option = option + "<td>"+userdatas[i].medical+"</td>";
+						   option = option + "<td>"+userdatas[i].gross+"</td>";
+				           option = option + "</tr>";
+					   }
+					   option = option+"</tbody>";
+						
+						table.append(option);
+				   },
+				   error:{
+					 
+				   }   
+	    		   
+	    	     });
+			 
+		      };
+		      
+		      
+		      
+		  
+		
+		 
+
+        	   
+        	   
+        
+        });
+		 
+    </script>
+	
+	
+    
+</head>
+
+<body>
+
+<div class="right_col" role="main" data-layout-fragment="content">
+
+   <div class="col-xs-1">
+   </div>
+  
+  
+   <div class="col-xs-10">
+   <h2 style="text-align: center;">Salary Sheet</h2>
+
+   <table id="tbl" class="table table-bordered table-responsive-md table-striped text-left">
+   </table>
+   
+   </div>
+   
+   <div class="col-xs-1">
+   </div>
+
+ </div>
+
+</body>
+</html>

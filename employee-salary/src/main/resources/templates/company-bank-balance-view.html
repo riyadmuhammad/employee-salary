@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}">
+<head>
+    <title>Company Bank Balance</title>
+    
+    <!-- jQuery -->
+<script src="/webjars/jquery/jquery.min.js"></script>
+
+<script>
+
+ $(document).ready(function(){
+	
+	
+	
+     $(window).load(function() {
+		
+		
+    	 companyAccountView();
+		
+	});
+   
+   
+     
+      companyAccountView = function(){
+
+  	   $.ajax({
+         	
+            url: '/company/bank-account/balance/view',
+            type: 'GET',
+             
+            success: function (response) { 
+            	
+            var datas= response.item;	
+             
+            if(response.messageType==1){
+            	
+            	$("#accountid").val(datas.accountId);
+            	$("#bankname").val(datas.bankName);
+            	
+            	$("#branchname").val(datas.branchName);
+            	$("#accounttype").val(datas.accountType);
+            	$("#accountname").val(datas.accountName);
+            	$("#currentbalance").val(datas.currentBalance);
+            	
+            	$("#totaldeposit").val(datas.totalDeposit);
+            	$("#totalwithdraw").val(datas.totalWithdraw);
+
+            }else{
+   
+            }
+                 
+            },
+            failure: function (response) {
+               alert("Failure");
+            },
+            error: function (response) {
+               alert("ERROR");
+            }
+         
+         });
+	   
+     };
+
+	
+});
+
+</script>
+    
+</head>
+
+<body>
+
+<div class="right_col" role="main" data-layout-fragment="content">
+
+
+  
+  
+  <div class="row">
+  
+  <h2 style="text-align: center;">Company Bank Account</h2> <br />
+  
+  
+  <div class="col-xs-4">
+   
+  
+  </div>
+  
+  <div class="col-xs-4">
+   <div class="col-xs-12">
+   <div class="form-group">
+	<input type="hidden" class="form-control" id="accountid" readonly="readonly"/>
+   </div>
+   </div>
+  
+  <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="bankname">Bank Name</label>
+	<input type="text" class="form-control" id="bankname" readonly="readonly"/>
+   </div>
+   </div>
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="branchname">Branch Name</label>
+	<input type="text" class="form-control" id="branchname" readonly="readonly"/>
+   </div>
+   </div>
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="accounttype">Account Type</label>
+	<input type="text" class="form-control" id="accounttype" readonly="readonly"/>
+   </div>
+   </div>
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="accountname">Account Name</label>
+	<input type="text" class="form-control" id="accountname" readonly="readonly"/>
+   </div>
+   </div>
+   
+   
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="totaldeposit">Total Deposit</label>
+	<input type="text" class="form-control" id="totaldeposit" readonly="readonly"/>
+   </div>
+   </div>
+   
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="totalwithdraw">Total Withdraw / Salary Paid</label>
+	<input type="text" class="form-control" id="totalwithdraw" readonly="readonly"/>
+   </div>
+   </div>
+   
+   
+   <div class="col-xs-12">
+   <div class="form-group">
+	<label class="col-form-label" for="currentbalance">Current Balance</label>
+	<input type="text" class="form-control" id="currentbalance" readonly="readonly"/>
+   </div>
+   </div>
+   
+
+  </div>
+  
+  
+  <div class="col-xs-4">
+   
+  
+  </div>
+ 
+ 
+ 
+ </div>
+ 
+ 
+   <div class="row">
+   <div class="col-xs-12" id="successmessage" style="color: green;">
+   </div>
+   </div>
+   
+   <div class="row">
+   <div class="col-xs-12" id="errormessage" style="color: red;">
+   </div> 
+   </div>
+ 
+ 
+
+ 
+  
+</div>
+
+    
+ 
+</body>
+
+</html>

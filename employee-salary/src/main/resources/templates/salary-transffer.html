@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-layout-decorate="~{fragments/layout}">
+	
+<head>
+    <title>Salary Transfer</title>
+    
+    <!-- jQuery -->
+<script src="/webjars/jquery/jquery.min.js"></script>
+
+    
+	
+	<script>
+       
+	 $(document).ready(function () {
+		 
+		 $(function(){
+			 employeeList();	
+		  });
+		 		
+		 
+		 employeeList=function(){
+		
+			 var table=$('#tbl'), option="";
+	    	   table.empty();
+	    	  
+	    	   $.ajax({
+	    		   
+	    		   type : "GET",
+				   url  : "/employee/list", 
+				   success : function(response){
+					   var userdatas=response.item;
+					   option = option + "<thead><tr><th>Employee ID</th><th>Name</th><th>Rank/Grade</th><th>Basic</th><th>House Rent</th><th>Medical</th><th>Gross</th></thead>";
+					   option = option+"<tbody>";	
+					   for(var i=0; i<userdatas.length; i++){
+						   option = option + "<tr>";
+						   option = option + "<td>"+userdatas[i].employeeCustomId+"</td>";
+						   option = option + "<td>"+userdatas[i].employeeName+"</td>";
+						   option = option + "<td>"+userdatas[i].gradeName+"</td>";
+						   option = option + "<td>"+userdatas[i].basic+"</td>";
+						   option = option + "<td>"+userdatas[i].houseRent+"</td>";
+						   option = option + "<td>"+userdatas[i].medical+"</td>";
+						   option = option + "<td>"+userdatas[i].gross+"</td>";
+				           option = option + "</tr>";
+					   }
+					   option = option+"</tbody>";
+						
+						table.append(option);
+				   },
+				   error:{
+					 
+				   }   
+	    		   
+	    	     });
+			 
+		      };
+		  
+		      
+		      
+		      
+		      $("#savebtn").click(function (){
+		 		 
+		 		 $('#successmessage').text("");
+		 		 $('#errormessage').text("");
+		     		
+		     	   var month=$('#month').val();
+		     	   var year=$('#year').val();
+
+		     	   
+
+		     	       
+		     	           	   
+		     	   $.ajax({
+		            	
+		     		   type : "GET",
+					   url  : "/transfer/salary?month="+month+"&year="+year,  
+		                
+		                success: function (response) {     
+		                
+		                if(response.messageType==1){
+		             	   $('#successmessage').text(response.message);
+		                }else{
+		                	$('#errormessage').text(response.message);
+		                }
+		                    
+		                },
+		                failure: function (response) {
+		                    alert("Failure");
+		                },
+		                error: function (response) {
+		                    alert("ERROR");
+		                }
+		            
+		            });
+		     	              		
+		     	});
+		
+		 
+
+        	   
+        	   
+        
+        });
+		 
+    </script>
+	
+	
+    
+</head>
+
+<body>
+
+<div class="right_col" role="main" data-layout-fragment="content">
+
+   <div class="col-xs-1">
+   </div>
+  
+  
+   <div class="col-xs-10">
+   <h2 style="text-align: center;">Salary Sheet</h2>
+
+   <table id="tbl" class="table table-bordered table-responsive-md table-striped text-left">
+   </table>
+   
+   
+   <div class="col-xs-6">
+   </div>
+   
+   <div class="col-xs-2">
+   
+   <div class="form-group">
+	<label class="col-form-label" for="month">Month</label>
+	<select class="form-control"  id="month">
+	<option value='' selected disabled hidden> Select</option>
+	<option value='January'> January</option>
+	<option value='February'> February</option>
+	<option value='March'> March</option>
+	<option value='April'> April</option>
+	<option value='May'> May</option>
+	<option value='June'> June</option>
+	<option value='July'> July</option>
+	<option value='August'> August</option>
+	<option value='September'> September</option>
+	<option value='October'> October</option>
+	<option value='November'> November</option>
+	<option value='December'> December</option>
+     </select>
+   </div>
+   
+   </div>
+   
+   <div class="col-xs-2">
+    <div class="form-group">
+	<label class="col-form-label" for="year">Year</label>
+	<select class="form-control"  id="year">
+	<option value='' selected disabled hidden> Select</option>
+	<option value='2020'> 2020</option>
+	<option value='2021'> 2021</option>
+	</select>
+   </div>
+   </div>
+   
+   <div class="col-xs-2">
+   <input type="submit" class="btn btn-success btn-block" value="Transfer"  id="savebtn" style="margin-top: 24px"/>
+   </div>
+   
+   </div>
+   
+   <div class="col-xs-1">
+   </div>
+   
+   <div class="row">
+   <div class="col-xs-12" id="successmessage" style="color: green;">
+   </div>
+   </div>
+   
+   <div class="row">
+   <div class="col-xs-12" id="errormessage" style="color: red;">
+   </div>
+   </div>
+   
+   
+
+ </div>
+
+</body>
+</html>
